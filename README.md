@@ -66,3 +66,14 @@ Returns 1 if x is odd, otherwise 0.
 
 ### Negate(x int) int
 Returns the negation of x.
+
+## Assembly Inspection
+
+Branchless code contains no "jump" instructions.
+Jump instructions usually start with a J.
+The only return for each function should be the last instruction ("RET").
+
+1. Create branchless.o
+  `go tool compile -S -o branchless.o branchless.go`
+1. Print assembly of branchless.o
+  `go tool objdump branchless.o`
