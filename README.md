@@ -66,6 +66,3 @@ Returns 1 if x is odd, otherwise 0.
 
 ### Negate(x int) int
 Returns the negation of x.
-
-### IsDivisibleBy(x, y int) int
-Returns 1 if x is divisible by y, otherwise 0.

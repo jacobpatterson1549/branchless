@@ -105,8 +105,3 @@ func IsOdd(x int) int {
 func Negate(x int) int {
 	return -x
 }
-
-// IsDivisibleBy returns 1 if x is divisible by y, otherwise 0.
-func IsDivisibleBy(x, y int) int {
-	return (x % y & 1) ^ 1
-}

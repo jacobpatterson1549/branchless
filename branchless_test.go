@@ -237,16 +237,6 @@ func FuzzAll(f *testing.F) {
 		if want != got {
 			xError(t, "Negate", x, want, got)
 		}
-
-		// IsDivisibleBy
-		want = 0
-		if y != 0 && x%y == 0 {
-			want = 1
-		}
-		got = IsDivisibleBy(x, y)
-		if want != got {
-			xyError(t, "IsDivisibleBy", x, y, want, got)
-		}
 	})
 }
 
