@@ -28,7 +28,7 @@ func GreaterThan(x, y int) int {
 
 // Equal returns 1 if x == y, otherwise 0.
 func Equal(x, y int) int {
-	return (((x ^ y) | -(x ^ y)) >> 63 & 1) ^ 1
+	return NotEqual(x, y) ^ 1
 }
 
 // NotEqual returns 1 if x != y, otherwise 0.
@@ -38,12 +38,12 @@ func NotEqual(x, y int) int {
 
 // LessThanEqualTo returns 1 if x <= y, otherwise 0.
 func LessThanEqualTo(x, y int) int {
-	return ((y - x) >> 63 & 1) ^ 1
+	return GreaterThan(x, y) ^ 1
 }
 
 // GreaterThanEqualTo returns 1 if x >= y, otherwise 0.
 func GreaterThanEqualTo(x, y int) int {
-	return ((x - y) >> 63 & 1) ^ 1
+	return LessThan(x, y) ^ 1
 }
 
 // Abs returns the absolute value of x.
@@ -63,7 +63,7 @@ func Sign(x int) int {
 
 // IsPositive returns 1 if x > 0, otherwise 0.
 func IsPositive(x int) int {
-	return IsNegative(x) ^ IsNotZero(x)
+	return IsNegative(-x)
 }
 
 // IsNegative returns 1 if x < 0, otherwise 0.
@@ -73,7 +73,7 @@ func IsNegative(x int) int {
 
 // IsZero returns 1 if x == 0, otherwise 0.
 func IsZero(x int) int {
-	return (((x | -x) >> 63) & 1) ^ 1
+	return IsNotZero(x) ^ 1
 }
 
 // IsNotZero returns 1 if x != 0, otherwise 0.
@@ -93,7 +93,7 @@ func IsPowerOfTwo(x int) int {
 
 // IsEven returns 1 if x is even, otherwise 0.
 func IsEven(x int) int {
-	return (x & 1) ^ 1
+	return IsOdd(x) ^ 1
 }
 
 // IsOdd returns 1 if x is odd, otherwise 0.
