@@ -1,29 +1,39 @@
 // Package branchless provides branchless operations on integers.
 package branchless
 
+import "unsafe"
+
+const (
+	zero          = 0
+	int_bytes     = unsafe.Sizeof(zero)
+	bits_per_byte = 8
+	int_bits      = int_bytes * bits_per_byte
+	max           = int(int_bits) - 1
+)
+
 // Min returns the minimum of x and y.
 func Min(x, y int) int {
-	return y ^ ((x ^ y) & ((x - y) >> 63))
+	return y ^ ((x ^ y) & ((x - y) >> max))
 }
 
 // Max returns the maximum of x and y.
 func Max(x, y int) int {
-	return x ^ ((x ^ y) & ((x - y) >> 63))
+	return x ^ ((x ^ y) & ((x - y) >> max))
 }
 
 // MaxZeroAnd returns 0 if x is less than 0, otherwise x.
 func MaxZeroAnd(x int) int {
-	return x & ^(x >> 63)
+	return x & ^(x >> max)
 }
 
 // LessThan returns 1 if x < y, otherwise 0.
 func LessThan(x, y int) int {
-	return ((x - y) >> 63) & 1
+	return ((x - y) >> max) & 1
 }
 
 // GreaterThan returns 1 if x > y, otherwise 0.
 func GreaterThan(x, y int) int {
-	return ((y - x) >> 63) & 1
+	return ((y - x) >> max) & 1
 }
 
 // Equal returns 1 if x == y, otherwise 0.
@@ -33,7 +43,7 @@ func Equal(x, y int) int {
 
 // NotEqual returns 1 if x != y, otherwise 0.
 func NotEqual(x, y int) int {
-	return (((x ^ y) | -(x ^ y)) >> 63 & 1)
+	return (((x ^ y) | -(x ^ y)) >> max & 1)
 }
 
 // LessThanEqualTo returns 1 if x <= y, otherwise 0.
@@ -48,12 +58,12 @@ func GreaterThanEqualTo(x, y int) int {
 
 // Abs returns the absolute value of x.
 func Abs(x int) int {
-	return (x + (x >> 63)) ^ (x >> 63)
+	return (x + (x >> max)) ^ (x >> max)
 }
 
 // Diff returns the absolute difference between x and y.
 func Diff(x, y int) int {
-	return ((x - y) ^ ((x - y) >> 63)) - ((x - y) >> 63)
+	return ((x - y) ^ ((x - y) >> max)) - ((x - y) >> max)
 }
 
 // Sign returns -1 if x < 0, 0 if x == 0, and 1 if x > 0.
@@ -68,7 +78,7 @@ func IsPositive(x int) int {
 
 // IsNegative returns 1 if x < 0, otherwise 0.
 func IsNegative(x int) int {
-	return (x >> 63) & 1
+	return (x >> max) & 1
 }
 
 // IsZero returns 1 if x == 0, otherwise 0.
@@ -78,7 +88,7 @@ func IsZero(x int) int {
 
 // IsNotZero returns 1 if x != 0, otherwise 0.
 func IsNotZero(x int) int {
-	return (((x | -x) >> 63) & 1)
+	return (((x | -x) >> max) & 1)
 }
 
 // Clamp clamps the value x between the minimum (min) and maximum (max) values.

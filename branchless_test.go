@@ -1,20 +1,6 @@
 package branchless
 
-import (
-	"testing"
-	"unsafe"
-)
-
-func TestIntSize(t *testing.T) {
-	var i int
-	var got = unsafe.Sizeof(i)
-	const want_bits = 64
-	const bits_per_byte = 8
-	const want uintptr = want_bits / bits_per_byte
-	if want != got {
-		t.Errorf("wanted int size to be %v, got %v", want, got)
-	}
-}
+import "testing"
 
 func FuzzAll(f *testing.F) {
 	f.Add(0, 0, 0)
