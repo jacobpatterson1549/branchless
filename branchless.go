@@ -58,12 +58,12 @@ func Diff(x, y int) int {
 
 // Sign returns -1 if x < 0, 0 if x == 0, and 1 if x > 0.
 func Sign(x int) int {
-	return (x >> 63) | (-(x >> 63))
+	return IsPositive(x) - IsNegative(x)
 }
 
 // IsPositive returns 1 if x > 0, otherwise 0.
 func IsPositive(x int) int {
-	return ^((x >> 63) & 1)
+	return IsNegative(x) ^ IsNotZero(x)
 }
 
 // IsNegative returns 1 if x < 0, otherwise 0.
@@ -88,7 +88,7 @@ func Clamp(x, min, max int) int {
 
 // IsPowerOfTwo returns 1 if x is a power of 2 (or is zero), otherwise 0.
 func IsPowerOfTwo(x int) int {
-	return ^x & (x - 1) >> 63
+	return IsPositive(x) & IsZero(x&(x-1))
 }
 
 // IsEven returns 1 if x is even, otherwise 0.
